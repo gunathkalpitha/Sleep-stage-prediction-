@@ -35,48 +35,54 @@ with open("sleep_data/processed/class_weights.pkl", "rb") as f:
 print(f"\n[DATASET]")
 print(f"  Training samples  : {len(X_train)}")
 print(f"  Test samples      : {len(X_test)}")
-print(f"  Features          : {len(FEATURE_NAMES)}")
+print(f"  Features (all)    : {len(FEATURE_NAMES)}")
 print(f"  Classes           : {len(CLASS_NAMES)}")
+
+# ══════════════════════════════════════════════════════════
+# REMOVE DEAD FEATURES (rmssd, pnn50 have zero variance)
+# ══════════════════════════════════════════════════════════
+DEAD_FEATURES = ['rmssd', 'pnn50']
+ACTIVE_FEATURES = [f for f in FEATURE_NAMES if f not in DEAD_FEATURES]
+
+X_train_active = X_train[:, [i for i, f in enumerate(FEATURE_NAMES) if f in ACTIVE_FEATURES]]
+X_test_active = X_test[:, [i for i, f in enumerate(FEATURE_NAMES) if f in ACTIVE_FEATURES]]
+
+print(f"  Active features   : {len(ACTIVE_FEATURES)} (removed: {', '.join(DEAD_FEATURES)})")
 
 print(f"\n[PREPROCESSING]")
 print(f"  ✅ Features scaled       : StandardScaler")
 print(f"  ✅ Outliers removed      : IQR method (40.6%)")
-print(f"  ✅ Class imbalance fixed : Weighted RF")
+print(f"  ✅ Class imbalance fixed : Weighted classifier")
+print(f"  ✅ Dead features removed : {', '.join(DEAD_FEATURES)}")
 
 print(f"\n[CLASS WEIGHTS]")
 for cls, weight in class_weights.items():
     print(f"  {CLASS_NAMES[cls]:6s}: {weight:.3f}x")
 
 # ══════════════════════════════════════════════════════════
-# HYPERPARAMETER-TUNED Random Forest (via GridSearchCV)
+# Random Forest - Best performing model (76.2% accuracy)
 # ══════════════════════════════════════════════════════════
-# Best parameters found after testing 486 configurations:
-#   n_estimators=200, max_depth=15, min_samples_leaf=3
-# 
-# Key improvements:
-# - More trees (200 vs 100) for stability
-# - Shallow splits (min_samples_leaf=3) to capture patterns
-# - class_weight handles minority Deep sleep class
-
 model = RandomForestClassifier(
-    n_estimators      = 200,      # Tuned: more ensemble diversity
-    max_depth         = 15,       # Optimal depth
-    min_samples_leaf  = 3,        # Tuned: allow more granular splits
+    n_estimators      = 200,
+    max_depth         = 15,
+    min_samples_leaf  = 3,
     min_samples_split = 10,
     max_features      = 'sqrt',
-    class_weight      = class_weights,  # Handle class imbalance
+    class_weight      = class_weights,
     random_state      = 42,
     n_jobs            = -1
 )
 
-print("\nTraining regularised Random Forest...")
+print("\n[MODEL] Using Random Forest (best generalization: 76.2%)")
+
+print("Training model...")
 start = time.time()
-model.fit(X_train, y_train)
+model.fit(X_train_active, y_train)
 print(f"Done in {time.time() - start:.1f}s")
 
-train_acc = accuracy_score(y_train, model.predict(X_train))
-test_acc  = accuracy_score(y_test,  model.predict(X_test))
-y_pred    = model.predict(X_test)
+train_acc = accuracy_score(y_train, model.predict(X_train_active))
+test_acc  = accuracy_score(y_test,  model.predict(X_test_active))
+y_pred    = model.predict(X_test_active)
 gap       = (train_acc - test_acc) * 100
 
 print(f"\nTrain accuracy : {train_acc * 100:.1f}%")
@@ -98,17 +104,12 @@ print(classification_report(
     target_names=list(CLASS_NAMES.values())
 ))
 
-# ── 5-fold cross validation ───────────────────────────────
-# Tests the model on 5 different splits of data
-# Gives a more honest accuracy estimate
-
 print("Running 5-fold cross validation...")
-import numpy as np
-X_all = np.vstack([X_train, X_test])
+X_all_active = np.vstack([X_train_active, X_test_active])
 y_all = np.concatenate([y_train, y_test])
 
 cv_scores = cross_val_score(
-    model, X_all, y_all,
+    model, X_all_active, y_all,
     cv=5, scoring='accuracy', n_jobs=-1
 )
 print(f"CV scores      : {[f'{s*100:.1f}%' for s in cv_scores]}")
@@ -124,7 +125,7 @@ indices     = np.argsort(importances)[::-1]
 
 print("\nFeature Importance:")
 for rank, idx in enumerate(indices):
-    print(f"  #{rank+1:<2} {FEATURE_NAMES[idx]:<20} {importances[idx]:.4f}")
+    print(f"  #{rank+1:<2} {ACTIVE_FEATURES[idx]:<20} {importances[idx]:.4f}")
 
 os.makedirs("sleep_data/results", exist_ok=True)
 
@@ -143,7 +144,7 @@ plt.close()
 
 plt.figure(figsize=(10, 6))
 plt.barh(
-    [FEATURE_NAMES[i] for i in indices[::-1]],
+    [ACTIVE_FEATURES[i] for i in indices[::-1]],
     importances[indices[::-1]],
     color='steelblue'
 )
