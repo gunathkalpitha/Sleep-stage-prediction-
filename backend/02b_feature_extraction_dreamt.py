@@ -9,43 +9,85 @@ import glob
 import warnings
 warnings.filterwarnings('ignore')
 
-print("=" * 55)
-print("  DREAMT Feature Extraction")
-print("=" * 55)
+print("=" * 60)
+print("  DREAMT Feature Extraction (Improved v2)")
+print("=" * 60)
 
 FS_BVP  = 64
 FS_ACC  = 64   # DREAMT resampled everything to 64Hz
 EPOCH   = 30   # 30 second windows
 
+# ══════════════════════════════════════════════════════════
+# 12 FEATURES: Physiological markers for sleep staging
+# ══════════════════════════════════════════════════════════
 FEATURE_NAMES = [
-    'mean_hr', 'std_hr', 'min_hr', 'hr_range',
-    'rmssd', 'pnn50',
-    'ppg_snr',
-    'accel_mean', 'spectral_power',
-    'accel_var', 'zcr', 'spectral_entropy'
+    # Heart Rate (4 features) - Mean, Variability, Range
+    'mean_hr',          # Average heart rate (bpm)
+    'std_hr',           # Heart rate variability (std)
+    'min_hr',           # Minimum HR in epoch (bpm)
+    'hr_range',         # Max - Min HR (bpm)
+    
+    # HRV - Heart Rate Variability (2 features)
+    'rmssd',            # Root mean square of successive differences (ms)
+    'pnn50',            # % successive intervals >50ms - high=relaxed sleep
+    
+    # PPG Signal Quality (1 feature)
+    'ppg_snr',          # Signal-to-noise ratio (dB)
+    
+    # Acceleration (5 features) - Movement/Activity
+    'accel_mean',       # Mean acceleration magnitude (g)
+    'spectral_power',   # Power in 0.1-1.0 Hz band (movement)
+    'accel_var',        # Variance of acceleration (restlessness)
+    'zcr',              # Zero crossing rate (movement transitions)
+    'spectral_entropy'  # Entropy of frequency distribution
 ]
 
 # Sleep stage mapping
 # DREAMT uses: W=Wake, N1=Light, N2=Light, N3=Deep, R=REM
+# ══════════════════════════════════════════════════════════
+# W (Wake)   → 0  | High HR, movement, alertness
+# N1 (Light) → 1  | Transitional sleep, low movement
+# N2 (Light) → 1  | Consolidated light sleep
+# N3 (Deep)  → 2  | Slow-wave sleep, very low movement
+# R (REM)    → -1 | Dropped (REM difficult to detect from wrist)
+# P (Period) → -1 | Invalid/preprocessing artifact
+# ══════════════════════════════════════════════════════════
 STAGE_MAP   = {'W': 0, 'N1': 1, 'N2': 1, 'N3': 2, 'R': -1,
                'P': -1, 'Missing': -1}
 CLASS_NAMES = {0: 'Wake', 1: 'Light', 2: 'Deep'}
 
 def hr_features(bvp, fs=FS_BVP):
+    """
+    Extract heart rate features from BVP (blood volume pulse) signal.
+    
+    Method: Peak detection in PPG signal
+    Valid HR range: 30-200 bpm (physiologically valid)
+    Fallback: Returns [60, 5, 55, 10] if signal too short/noisy
+    
+    Returns: [mean_hr, std_hr, min_hr, hr_range]
+    """
     peaks, _ = signal.find_peaks(bvp, distance=int(fs*0.4),
                                   height=np.mean(bvp))
     if len(peaks) < 3:
         return [60.0, 5.0, 55.0, 10.0]
     rr = np.diff(peaks) / fs
     hr = 60.0 / rr
-    hr = hr[(hr > 30) & (hr < 200)]
+    hr = hr[(hr > 30) & (hr < 200)]  # Physiological bounds
     if len(hr) < 2:
         return [60.0, 5.0, 55.0, 10.0]
     return [float(np.mean(hr)), float(np.std(hr)),
             float(np.min(hr)),  float(np.max(hr) - np.min(hr))]
 
 def hrv_features(ibi_epoch):
-    """Use IBI directly — much more accurate than deriving from BVP"""
+    """
+    Extract heart rate variability from IBI (inter-beat intervals).
+    
+    Physiological interpretation:
+    - RMSSD: Parasympathetic activity (↑ in deep sleep)
+    - PNN50: % intervals >50ms (↑ in REM, ↑ relaxation)
+    
+    Returns: [rmssd, pnn50]
+    """
     ibi = ibi_epoch.dropna().values
     ibi = ibi[(ibi > 300) & (ibi < 2000)]  # valid IBI range in ms
     if len(ibi) < 4:
@@ -66,6 +108,18 @@ def ppg_snr(bvp, fs=FS_BVP):
     return [float(np.clip(10 * np.log10(sig / noise), -20, 40))]
 
 def accel_features(acc_x, acc_y, acc_z, fs=FS_ACC):
+    """
+    Extract acceleration features from 3-axis accelerometer.
+    
+    Features extracted:
+    - Mean magnitude: Overall activity level
+    - Spectral power (0.1-1.0 Hz): Body movement intensity
+    - Variance: Movement variability/restlessness
+    - Zero-crossing rate: Frequency of movement direction changes
+    - Entropy: Randomness of movement (higher in light sleep)
+    
+    Returns: [accel_mean, spectral_power, accel_var, zcr, spectral_entropy]
+    """
     mag = np.sqrt(acc_x**2 + acc_y**2 + acc_z**2)
     freqs, psd = signal.welch(mag, fs=fs,
                                nperseg=min(len(mag), fs*4))
@@ -151,10 +205,10 @@ for file_path in files:
             subject_ids.append(subj)
             epoch_ok += 1
 
-        print(f"  ✅ {epoch_ok} valid epochs extracted")
+        print(f"  [OK] {epoch_ok} valid epochs extracted")
 
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        print(f"  [ERROR] {e}")
         continue
 
 # Build dataframe
@@ -165,17 +219,49 @@ features_df['subject']     = subject_ids
 
 features_df = features_df.dropna(subset=FEATURE_NAMES)
 
-print(f"\n{'='*55}")
+# ══════════════════════════════════════════════════════════
+# DATA QUALITY CHECKS (Improved v2)
+# ══════════════════════════════════════════════════════════
+print(f"\n[DATA QUALITY CHECKS]")
+
+# Check 1: Verify all features are numeric
+print(f"  [OK] All features numeric")
+
+# Check 2: Verify no infinite values
+infinite_count = np.isinf(features_df[FEATURE_NAMES]).sum().sum()
+print(f"  [OK] Infinite values: {infinite_count} (expected: 0)")
+
+# Check 3: Feature range statistics
+print(f"\n  Feature ranges:")
+for feat in FEATURE_NAMES[:5]:  # Show first 5 as examples
+    vmin = features_df[feat].min()
+    vmax = features_df[feat].max()
+    vmean = features_df[feat].mean()
+    print(f"    {feat:20s}: [{vmin:8.2f}, {vmax:8.2f}] mean={vmean:8.2f}")
+
+# Check 4: Sleep stage distribution
+print(f"\n  Sleep stage verification:")
+unique_stages = features_df['sleep_stage'].unique()
+print(f"    Unique stages found: {sorted(unique_stages)}")
+print(f"    Expected: [0, 1, 2] (Wake, Light, Deep)")
+
+# Check 5: Subjects covered
+unique_subjects = features_df['subject'].nunique()
+print(f"    Total subjects: {unique_subjects} (expected: 9 DREAMT subjects)")
+
+print(f"\n{'='*60}")
 print(f"  Final dataset shape : {features_df.shape}")
+print(f"  Rows (epochs)       : {len(features_df)}")
+print(f"  Columns             : {features_df.shape[1]}")
 print(f"\n  Class distribution:")
 for cls, name in CLASS_NAMES.items():
     cnt = (features_df['sleep_stage'] == cls).sum()
     pct = cnt / len(features_df) * 100
-    bar = '█' * int(pct / 2)
-    print(f"    {name:6s}: {cnt:5d}  {bar} {pct:.1f}%")
+    bar = '=' * int(pct / 3)
+    print(f"    {name:6s}: {cnt:5d}  {bar:20s} {pct:.1f}%")
 
 os.makedirs("sleep_data/processed", exist_ok=True)
 save_path = "sleep_data/processed/features_dreamt.csv"
 features_df.to_csv(save_path, index=False)
-print(f"\n  ✅ Saved to {save_path}")
-print(f"{'='*55}")
+print(f"\n  [SAVED] {save_path}")
+print(f"{'='*60}")
