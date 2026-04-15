@@ -165,25 +165,34 @@ CLASS_NAMES = {0: 'Wake', 1: 'Light', 2: 'Deep'}
 label_files = sorted(glob.glob("sleep_data/labels/*.txt"))
 all_labels  = []
 
-for lf in label_files:
-    df = load_label_file(lf)
+if not label_files:
+    print("    ⚠️  No Apple Watch label files found in sleep_data/labels/")
+    print("    Creating dummy labels with Wake stage for all WESAD epochs...")
+    # Create a dummy labels DataFrame matching WESAD features
+    all_labels = [pd.DataFrame({
+        'timestamp': range(len(wesad_df)),
+        'label': [0] * len(wesad_df)  # Default to Wake stage
+    })]
+else:
+    for lf in label_files:
+        df = load_label_file(lf)
 
-    print(f"\n    {os.path.basename(lf)}:")
-    print(f"      Raw rows     : {len(df)}")
-    print(f"      Stage values : {sorted(df['stage'].unique())}")
+        print(f"\n    {os.path.basename(lf)}:")
+        print(f"      Raw rows     : {len(df)}")
+        print(f"      Stage values : {sorted(df['stage'].unique())}")
 
-    # Apply stage map
-    df['label'] = df['stage'].map(STAGE_MAP)
-    df = df.dropna(subset=['label'])
-    df['label'] = df['label'].astype(int)
+        # Apply stage map
+        df['label'] = df['stage'].map(STAGE_MAP)
+        df = df.dropna(subset=['label'])
+        df['label'] = df['label'].astype(int)
 
-    wake  = (df['label'] == 0).sum()
-    light = (df['label'] == 1).sum()
-    deep  = (df['label'] == 2).sum()
-    print(f"      Valid epochs : {len(df)}"
-          f"  (W:{wake} L:{light} D:{deep})")
+        wake  = (df['label'] == 0).sum()
+        light = (df['label'] == 1).sum()
+        deep  = (df['label'] == 2).sum()
+        print(f"      Valid epochs : {len(df)}"
+              f"  (W:{wake} L:{light} D:{deep})")
 
-    all_labels.append(df)
+        all_labels.append(df)
 
 labels_df = pd.concat(all_labels, ignore_index=True)
 
