@@ -25,13 +25,23 @@ y_test  = np.load("sleep_data/processed/y_test.npy")
 with open("sleep_data/processed/feature_names.pkl", "rb") as f:
     FEATURE_NAMES = pickle.load(f)
 
+# Load class weights for imbalanced dataset
+with open("sleep_data/processed/class_weights.pkl", "rb") as f:
+    class_weights = pickle.load(f)
+
 print(f"Training samples : {len(X_train)}")
 print(f"Test samples     : {len(X_test)}")
+print(f"Features scaled  : Yes (StandardScaler)")
+print(f"Outliers removed : Yes (IQR method)")
+print(f"\nClass weights (for imbalance):")
+for cls, weight in class_weights.items():
+    print(f"  {CLASS_NAMES[cls]:6s}: {weight:.3f}")
 
-# ── Regularised model ─────────────────────────────────────
+# ── Regularised model with class weights ──────────────────
 # max_depth        limits how deep each tree grows
 # min_samples_leaf forces each leaf to have enough samples
 # max_features     limits features per split
+# class_weight     penalizes misclassification of rare classes
 # These prevent the model from memorising training data
 
 model = RandomForestClassifier(
@@ -40,6 +50,7 @@ model = RandomForestClassifier(
     min_samples_leaf  = 5,
     min_samples_split = 10,
     max_features      = 'sqrt',
+    class_weight      = class_weights,  # Handle imbalance
     random_state      = 42,
     n_jobs            = -1
 )
