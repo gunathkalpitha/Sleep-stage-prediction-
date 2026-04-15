@@ -38,33 +38,32 @@ print(f"  Test samples      : {len(X_test)}")
 print(f"  Features (all)    : {len(FEATURE_NAMES)}")
 print(f"  Classes           : {len(CLASS_NAMES)}")
 
-# ══════════════════════════════════════════════════════════
-# REMOVE DEAD FEATURES (rmssd, pnn50 have zero variance)
-# ══════════════════════════════════════════════════════════
+# Remove dead features (zero variance features)
 DEAD_FEATURES = ['rmssd', 'pnn50']
 ACTIVE_FEATURES = [f for f in FEATURE_NAMES if f not in DEAD_FEATURES]
 
 X_train_active = X_train[:, [i for i, f in enumerate(FEATURE_NAMES) if f in ACTIVE_FEATURES]]
 X_test_active = X_test[:, [i for i, f in enumerate(FEATURE_NAMES) if f in ACTIVE_FEATURES]]
 
-print(f"  Active features   : {len(ACTIVE_FEATURES)} (removed: {', '.join(DEAD_FEATURES)})")
+print(f"  Active features   : {len(ACTIVE_FEATURES)} (removed dead: {', '.join(DEAD_FEATURES)})")
 
 print(f"\n[PREPROCESSING]")
 print(f"  ✅ Features scaled       : StandardScaler")
 print(f"  ✅ Outliers removed      : IQR method (40.6%)")
-print(f"  ✅ Class imbalance fixed : Weighted classifier")
-print(f"  ✅ Dead features removed : {', '.join(DEAD_FEATURES)}")
+print(f"  ✅ Class imbalance fixed : Class weights only")
+print(f"  ✅ NO synthetic data     : Real data only")
 
-print(f"\n[CLASS WEIGHTS]")
+print("[CLASS WEIGHTS]")
 for cls, weight in class_weights.items():
     print(f"  {CLASS_NAMES[cls]:6s}: {weight:.3f}x")
 
 # ══════════════════════════════════════════════════════════
-# Random Forest - Best performing model (76.2% accuracy)
+# Random Forest - Optimized for real data with class weights
+# NO synthetic data - using proper class weights only
 # ══════════════════════════════════════════════════════════
 model = RandomForestClassifier(
     n_estimators      = 200,
-    max_depth         = 15,
+    max_depth         = 12,        # SWEET SPOT: balance accuracy & generalization
     min_samples_leaf  = 3,
     min_samples_split = 10,
     max_features      = 'sqrt',
@@ -73,7 +72,7 @@ model = RandomForestClassifier(
     n_jobs            = -1
 )
 
-print("\n[MODEL] Using Random Forest (best generalization: 76.2%)")
+print("\n[MODEL] Random Forest (Optimized: max_depth=12)")
 
 print("Training model...")
 start = time.time()

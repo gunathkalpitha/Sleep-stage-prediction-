@@ -94,7 +94,7 @@ print(f"    ✅ Training set scaled")
 print(f"       Mean: {X_train_scaled.mean(axis=0).round(4)}")
 print(f"       Std:  {X_train_scaled.std(axis=0).round(4)}")
 
-# Save numpy arrays
+# Save numpy arrays (NO SMOTE - using real data only)
 os.makedirs("sleep_data/processed", exist_ok=True)
 np.save("sleep_data/processed/X_train.npy", X_train_scaled)
 np.save("sleep_data/processed/X_test.npy", X_test_scaled)
@@ -116,13 +116,16 @@ class_weights = compute_class_weight('balanced',
                                       y=y_train)
 class_weight_dict = {i: w for i, w in enumerate(class_weights)}
 
-print(f"\n[7] Class weights (for imbalance handling)")
+print(f"\n[7] Class weights (Proper weights for imbalanced data)")
+print(f"    Calculated from real data distribution (no synthetic samples)")
 for cls, weight in class_weight_dict.items():
-    print(f"    {CLASS_NAMES[cls]:6s}: {weight:.3f}")
+    print(f"    {CLASS_NAMES[cls]:6s}: {weight:.3f}x (higher weight for minority classes)")
 
 with open("sleep_data/processed/class_weights.pkl", "wb") as f:
     pickle.dump(class_weight_dict, f)
 
-print(f"\n✅ Preprocessing complete (with optimizations)!")
+print(f"\n✅ Preprocessing complete (Real data + Class weights)!")
+print(f"   [Train samples: {len(y_train)} - NO synthetic data]")
+print(f"   [Deep sleep weight: {class_weight_dict[2]:.3f}x | Wake weight: {class_weight_dict[0]:.3f}x]")
 print(f"   Ready for model training (04_train_model.py)")
 print("=" * 55)
