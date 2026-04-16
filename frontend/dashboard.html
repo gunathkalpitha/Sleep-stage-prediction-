@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Stage Monitor - Real-time EEG Analysis</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>🧠 Sleep Stage Monitor</h1>
+                <p>Real-time EEG Classification System</p>
+            </div>
+            <div class="time-display" id="timeDisplay">23:30</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Current Status Card -->
+            <section class="status-card">
+                <div class="status-header">
+                    <div class="status-icon" id="statusIcon">💤</div>
+                    <div class="status-info">
+                        <div class="current-stage" id="currentStage">Deep Sleep</div>
+                        <div class="time-in-stage" id="timeInStage">2h 45m elapsed</div>
+                    </div>
+                </div>
+
+                <div class="metrics-row">
+                    <div class="metric-mini">
+                        <span class="label">Duration</span>
+                        <span class="value" id="totalDuration">7h 45m</span>
+                    </div>
+                    <div class="metric-mini">
+                        <span class="label">Cycles</span>
+                        <span class="value" id="cyclesCount">4</span>
+                    </div>
+                    <div class="metric-mini">
+                        <span class="label">Quality</span>
+                        <span class="value quality" id="qualityScoreMini">82%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quality Score Gauge -->
+            <section class="quality-section">
+                <div class="quality-gauge">
+                    <svg viewBox="0 0 400 220" class="gauge-svg">
+                        <!-- Background track -->
+                        <defs>
+                            <linearGradient id="qualityGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Gauge background -->
+                        <path d="M 50 180 Q 200 80 350 180" stroke="#e5e7eb" stroke-width="25" fill="none" stroke-linecap="round"/>
+                        
+                        <!-- Gauge progress (82%) -->
+                        <path d="M 50 180 Q 200 80 330 180" stroke="url(#qualityGradient)" stroke-width="25" fill="none" stroke-linecap="round" class="gauge-progress"/>
+                        
+                        <!-- Center circle with score -->
+                        <circle cx="200" cy="180" r="45" fill="white" stroke="#10b981" stroke-width="3"/>
+                        <text x="200" y="185" font-size="32" font-weight="bold" text-anchor="middle" fill="#10b981" id="gaugeScore">82</text>
+                        <text x="200" y="205" font-size="14" text-anchor="middle" fill="#6b7280">Excellent</text>
+                    </svg>
+                </div>
+            </section>
+
+            <!-- Sleep Timeline -->
+            <section class="timeline-section">
+                <h2>Sleep Timeline</h2>
+                <div class="timeline-container">
+                    <div class="timeline-labels">
+                        <span>11 PM</span>
+                        <span>1 AM</span>
+                        <span>3 AM</span>
+                        <span>5 AM</span>
+                        <span>7 AM</span>
+                    </div>
+                    <div class="timeline-bars" id="timelineCanvas">
+                        <!-- Will be filled by JavaScript -->
+                    </div>
+                    <div class="timeline-legend">
+                        <div class="legend-item">
+                            <div class="legend-color wake"></div>
+                            <span>Wake</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color light"></div>
+                            <span>Light</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color deep"></div>
+                            <span>Deep</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sleep Stages Distribution -->
+            <section class="distribution-section">
+                <h2>Sleep Composition</h2>
+                <div class="pie-chart-container">
+                    <svg viewBox="0 0 400 300" class="pie-chart">
+                        <!-- Wake: 8% -->
+                        <path d="M 200 150 L 200 50 A 100 100 0 0 1 215.2 51.8 Z" fill="#3b82f6" opacity="0.8"/>
+                        
+                        <!-- Light: 45% -->
+                        <path d="M 200 150 L 215.2 51.8 A 100 100 0 0 1 285.4 114.6 Z" fill="#8b5cf6" opacity="0.8"/>
+                        
+                        <!-- Deep: 22% -->
+                        <path d="M 200 150 L 285.4 114.6 A 100 100 0 0 1 241.4 242.7 Z" fill="#ec4899" opacity="0.8"/>
+                        
+                        <!-- REM: 25% -->
+                        <path d="M 200 150 L 241.4 242.7 A 100 100 0 0 1 100 150 Z" fill="#f59e0b" opacity="0.8"/>
+                        
+                        <!-- Wake slice continues -->
+                        <path d="M 200 150 L 100 150 A 100 100 0 0 1 200 50 Z" fill="#3b82f6"/>
+                        
+                        <!-- Center circle -->
+                        <circle cx="200" cy="150" r="60" fill="white"/>
+                        <text x="200" y="155" font-size="28" font-weight="bold" text-anchor="middle" fill="#1f2937">7h 45m</text>
+                    </svg>
+                    <div class="pie-legend">
+                        <div class="pie-item">
+                            <div class="pie-color" style="background-color: #3b82f6;"></div>
+                            <div class="pie-info">
+                                <div class="pie-label">Wake</div>
+                                <div class="pie-percent" id="wakePercent">8%</div>
+                            </div>
+                        </div>
+                        <div class="pie-item">
+                            <div class="pie-color" style="background-color: #8b5cf6;"></div>
+                            <div class="pie-info">
+                                <div class="pie-label">Light</div>
+                                <div class="pie-percent" id="lightPercent">45%</div>
+                            </div>
+                        </div>
+                        <div class="pie-item">
+                            <div class="pie-color" style="background-color: #ec4899;"></div>
+                            <div class="pie-info">
+                                <div class="pie-label">Deep</div>
+                                <div class="pie-percent" id="deepPercent">22%</div>
+                            </div>
+                        </div>
+                        <div class="pie-item">
+                            <div class="pie-color" style="background-color: #f59e0b;"></div>
+                            <div class="pie-info">
+                                <div class="pie-label">REM</div>
+                                <div class="pie-percent" id="remPercent">25%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Stats -->
+            <section class="stats-section">
+                <h2>Sleep Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">😴</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Total Sleep</div>
+                            <div class="stat-value" id="totalSleep">7h 45m</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Sleep Efficiency</div>
+                            <div class="stat-value" id="efficiency">98%</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🔄</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Sleep Cycles</div>
+                            <div class="stat-value" id="cycles">4</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">❤️</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Avg Heart Rate</div>
+                            <div class="stat-value" id="heartRate">58 bpm</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Deep Sleep</div>
+                            <div class="stat-value" id="deepAmount">1h 42m</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💆</div>
+                        <div class="stat-content">
+                            <div class="stat-label">Light Sleep</div>
+                            <div class="stat-value" id="lightAmount">3h 29m</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Info -->
+            <section class="model-info">
+                <h2>ML Model Performance</h2>
+                <div class="model-stats">
+                    <div class="model-stat">
+                        <span class="label">Test Accuracy</span>
+                        <span class="value">87.5%</span>
+                    </div>
+                    <div class="model-stat">
+                        <span class="label">Generalization Gap</span>
+                        <span class="value">1.7%</span>
+                    </div>
+                    <div class="model-stat">
+                        <span class="label">Cross-Validation</span>
+                        <span class="value">86.8%</span>
+                    </div>
+                    <div class="model-stat">
+                        <span class="label">Model Type</span>
+                        <span class="value">Random Forest</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Sleep Stage Recognition System | ML-powered EEG Analysis</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

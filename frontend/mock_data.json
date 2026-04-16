@@ -1,0 +1,1209 @@
+{
+  "sleep_stages": [
+    {
+      "minute": 0,
+      "stage": "Wake",
+      "time": "00:00",
+      "quality_score": 82
+    },
+    {
+      "minute": 1,
+      "stage": "Wake",
+      "time": "00:01",
+      "quality_score": 82
+    },
+    {
+      "minute": 2,
+      "stage": "Wake",
+      "time": "00:02",
+      "quality_score": 84
+    },
+    {
+      "minute": 3,
+      "stage": "Wake",
+      "time": "00:03",
+      "quality_score": 82
+    },
+    {
+      "minute": 4,
+      "stage": "Wake",
+      "time": "00:04",
+      "quality_score": 69
+    },
+    {
+      "minute": 5,
+      "stage": "Light",
+      "time": "00:05",
+      "quality_score": 72
+    },
+    {
+      "minute": 6,
+      "stage": "Light",
+      "time": "00:06",
+      "quality_score": 77
+    },
+    {
+      "minute": 7,
+      "stage": "Light",
+      "time": "00:07",
+      "quality_score": 70
+    },
+    {
+      "minute": 8,
+      "stage": "Light",
+      "time": "00:08",
+      "quality_score": 82
+    },
+    {
+      "minute": 9,
+      "stage": "Light",
+      "time": "00:09",
+      "quality_score": 76
+    },
+    {
+      "minute": 10,
+      "stage": "Light",
+      "time": "00:10",
+      "quality_score": 66
+    },
+    {
+      "minute": 11,
+      "stage": "Light",
+      "time": "00:11",
+      "quality_score": 65
+    },
+    {
+      "minute": 12,
+      "stage": "Light",
+      "time": "00:12",
+      "quality_score": 60
+    },
+    {
+      "minute": 13,
+      "stage": "Light",
+      "time": "00:13",
+      "quality_score": 74
+    },
+    {
+      "minute": 14,
+      "stage": "Light",
+      "time": "00:14",
+      "quality_score": 83
+    },
+    {
+      "minute": 15,
+      "stage": "Deep",
+      "time": "00:15",
+      "quality_score": 76
+    },
+    {
+      "minute": 16,
+      "stage": "Deep",
+      "time": "00:16",
+      "quality_score": 78
+    },
+    {
+      "minute": 17,
+      "stage": "Deep",
+      "time": "00:17",
+      "quality_score": 87
+    },
+    {
+      "minute": 18,
+      "stage": "Deep",
+      "time": "00:18",
+      "quality_score": 84
+    },
+    {
+      "minute": 19,
+      "stage": "Deep",
+      "time": "00:19",
+      "quality_score": 74
+    },
+    {
+      "minute": 20,
+      "stage": "Deep",
+      "time": "00:20",
+      "quality_score": 88
+    },
+    {
+      "minute": 21,
+      "stage": "Deep",
+      "time": "00:21",
+      "quality_score": 72
+    },
+    {
+      "minute": 22,
+      "stage": "Deep",
+      "time": "00:22",
+      "quality_score": 82
+    },
+    {
+      "minute": 23,
+      "stage": "Deep",
+      "time": "00:23",
+      "quality_score": 93
+    },
+    {
+      "minute": 24,
+      "stage": "Deep",
+      "time": "00:24",
+      "quality_score": 73
+    },
+    {
+      "minute": 25,
+      "stage": "Deep",
+      "time": "00:25",
+      "quality_score": 86
+    },
+    {
+      "minute": 26,
+      "stage": "Deep",
+      "time": "00:26",
+      "quality_score": 77
+    },
+    {
+      "minute": 27,
+      "stage": "Deep",
+      "time": "00:27",
+      "quality_score": 91
+    },
+    {
+      "minute": 28,
+      "stage": "Deep",
+      "time": "00:28",
+      "quality_score": 76
+    },
+    {
+      "minute": 29,
+      "stage": "Deep",
+      "time": "00:29",
+      "quality_score": 91
+    },
+    {
+      "minute": 30,
+      "stage": "Deep",
+      "time": "00:30",
+      "quality_score": 83
+    },
+    {
+      "minute": 31,
+      "stage": "Deep",
+      "time": "00:31",
+      "quality_score": 76
+    },
+    {
+      "minute": 32,
+      "stage": "Deep",
+      "time": "00:32",
+      "quality_score": 84
+    },
+    {
+      "minute": 33,
+      "stage": "Deep",
+      "time": "00:33",
+      "quality_score": 93
+    },
+    {
+      "minute": 34,
+      "stage": "Deep",
+      "time": "00:34",
+      "quality_score": 84
+    },
+    {
+      "minute": 35,
+      "stage": "Deep",
+      "time": "00:35",
+      "quality_score": 94
+    },
+    {
+      "minute": 36,
+      "stage": "Deep",
+      "time": "00:36",
+      "quality_score": 87
+    },
+    {
+      "minute": 37,
+      "stage": "Deep",
+      "time": "00:37",
+      "quality_score": 88
+    },
+    {
+      "minute": 38,
+      "stage": "Deep",
+      "time": "00:38",
+      "quality_score": 88
+    },
+    {
+      "minute": 39,
+      "stage": "Deep",
+      "time": "00:39",
+      "quality_score": 77
+    },
+    {
+      "minute": 40,
+      "stage": "Light",
+      "time": "00:40",
+      "quality_score": 76
+    },
+    {
+      "minute": 41,
+      "stage": "Light",
+      "time": "00:41",
+      "quality_score": 63
+    },
+    {
+      "minute": 42,
+      "stage": "Light",
+      "time": "00:42",
+      "quality_score": 66
+    },
+    {
+      "minute": 43,
+      "stage": "Light",
+      "time": "00:43",
+      "quality_score": 71
+    },
+    {
+      "minute": 44,
+      "stage": "Light",
+      "time": "00:44",
+      "quality_score": 75
+    },
+    {
+      "minute": 45,
+      "stage": "Light",
+      "time": "00:45",
+      "quality_score": 64
+    },
+    {
+      "minute": 46,
+      "stage": "Light",
+      "time": "00:46",
+      "quality_score": 82
+    },
+    {
+      "minute": 47,
+      "stage": "Light",
+      "time": "00:47",
+      "quality_score": 72
+    },
+    {
+      "minute": 48,
+      "stage": "Light",
+      "time": "00:48",
+      "quality_score": 63
+    },
+    {
+      "minute": 49,
+      "stage": "Light",
+      "time": "00:49",
+      "quality_score": 71
+    },
+    {
+      "minute": 50,
+      "stage": "Light",
+      "time": "00:50",
+      "quality_score": 70
+    },
+    {
+      "minute": 51,
+      "stage": "Light",
+      "time": "00:51",
+      "quality_score": 66
+    },
+    {
+      "minute": 52,
+      "stage": "Light",
+      "time": "00:52",
+      "quality_score": 63
+    },
+    {
+      "minute": 53,
+      "stage": "Light",
+      "time": "00:53",
+      "quality_score": 75
+    },
+    {
+      "minute": 54,
+      "stage": "Light",
+      "time": "00:54",
+      "quality_score": 76
+    },
+    {
+      "minute": 55,
+      "stage": "Wake",
+      "time": "00:55",
+      "quality_score": 82
+    },
+    {
+      "minute": 56,
+      "stage": "Wake",
+      "time": "00:56",
+      "quality_score": 73
+    },
+    {
+      "minute": 57,
+      "stage": "Light",
+      "time": "00:57",
+      "quality_score": 75
+    },
+    {
+      "minute": 58,
+      "stage": "Light",
+      "time": "00:58",
+      "quality_score": 68
+    },
+    {
+      "minute": 59,
+      "stage": "Light",
+      "time": "00:59",
+      "quality_score": 62
+    },
+    {
+      "minute": 60,
+      "stage": "Light",
+      "time": "01:00",
+      "quality_score": 60
+    },
+    {
+      "minute": 61,
+      "stage": "Light",
+      "time": "01:01",
+      "quality_score": 75
+    },
+    {
+      "minute": 62,
+      "stage": "Light",
+      "time": "01:02",
+      "quality_score": 70
+    },
+    {
+      "minute": 63,
+      "stage": "Light",
+      "time": "01:03",
+      "quality_score": 72
+    },
+    {
+      "minute": 64,
+      "stage": "Light",
+      "time": "01:04",
+      "quality_score": 78
+    },
+    {
+      "minute": 65,
+      "stage": "Light",
+      "time": "01:05",
+      "quality_score": 67
+    },
+    {
+      "minute": 66,
+      "stage": "Light",
+      "time": "01:06",
+      "quality_score": 64
+    },
+    {
+      "minute": 67,
+      "stage": "Light",
+      "time": "01:07",
+      "quality_score": 66
+    },
+    {
+      "minute": 68,
+      "stage": "Light",
+      "time": "01:08",
+      "quality_score": 64
+    },
+    {
+      "minute": 69,
+      "stage": "Deep",
+      "time": "01:09",
+      "quality_score": 75
+    },
+    {
+      "minute": 70,
+      "stage": "Deep",
+      "time": "01:10",
+      "quality_score": 94
+    },
+    {
+      "minute": 71,
+      "stage": "Deep",
+      "time": "01:11",
+      "quality_score": 89
+    },
+    {
+      "minute": 72,
+      "stage": "Deep",
+      "time": "01:12",
+      "quality_score": 80
+    },
+    {
+      "minute": 73,
+      "stage": "Deep",
+      "time": "01:13",
+      "quality_score": 87
+    },
+    {
+      "minute": 74,
+      "stage": "Deep",
+      "time": "01:14",
+      "quality_score": 71
+    },
+    {
+      "minute": 75,
+      "stage": "Deep",
+      "time": "01:15",
+      "quality_score": 85
+    },
+    {
+      "minute": 76,
+      "stage": "Deep",
+      "time": "01:16",
+      "quality_score": 73
+    },
+    {
+      "minute": 77,
+      "stage": "Deep",
+      "time": "01:17",
+      "quality_score": 90
+    },
+    {
+      "minute": 78,
+      "stage": "Deep",
+      "time": "01:18",
+      "quality_score": 71
+    },
+    {
+      "minute": 79,
+      "stage": "Deep",
+      "time": "01:19",
+      "quality_score": 79
+    },
+    {
+      "minute": 80,
+      "stage": "Deep",
+      "time": "01:20",
+      "quality_score": 77
+    },
+    {
+      "minute": 81,
+      "stage": "Deep",
+      "time": "01:21",
+      "quality_score": 92
+    },
+    {
+      "minute": 82,
+      "stage": "Deep",
+      "time": "01:22",
+      "quality_score": 84
+    },
+    {
+      "minute": 83,
+      "stage": "Deep",
+      "time": "01:23",
+      "quality_score": 81
+    },
+    {
+      "minute": 84,
+      "stage": "Deep",
+      "time": "01:24",
+      "quality_score": 94
+    },
+    {
+      "minute": 85,
+      "stage": "Deep",
+      "time": "01:25",
+      "quality_score": 93
+    },
+    {
+      "minute": 86,
+      "stage": "Deep",
+      "time": "01:26",
+      "quality_score": 76
+    },
+    {
+      "minute": 87,
+      "stage": "Deep",
+      "time": "01:27",
+      "quality_score": 94
+    },
+    {
+      "minute": 88,
+      "stage": "Deep",
+      "time": "01:28",
+      "quality_score": 71
+    },
+    {
+      "minute": 89,
+      "stage": "Light",
+      "time": "01:29",
+      "quality_score": 62
+    },
+    {
+      "minute": 90,
+      "stage": "Light",
+      "time": "01:30",
+      "quality_score": 65
+    },
+    {
+      "minute": 91,
+      "stage": "Light",
+      "time": "01:31",
+      "quality_score": 78
+    },
+    {
+      "minute": 92,
+      "stage": "Light",
+      "time": "01:32",
+      "quality_score": 68
+    },
+    {
+      "minute": 93,
+      "stage": "Light",
+      "time": "01:33",
+      "quality_score": 72
+    },
+    {
+      "minute": 94,
+      "stage": "Light",
+      "time": "01:34",
+      "quality_score": 66
+    },
+    {
+      "minute": 95,
+      "stage": "Light",
+      "time": "01:35",
+      "quality_score": 65
+    },
+    {
+      "minute": 96,
+      "stage": "Light",
+      "time": "01:36",
+      "quality_score": 76
+    },
+    {
+      "minute": 97,
+      "stage": "Light",
+      "time": "01:37",
+      "quality_score": 72
+    },
+    {
+      "minute": 98,
+      "stage": "Light",
+      "time": "01:38",
+      "quality_score": 70
+    },
+    {
+      "minute": 99,
+      "stage": "Light",
+      "time": "01:39",
+      "quality_score": 77
+    },
+    {
+      "minute": 100,
+      "stage": "Light",
+      "time": "01:40",
+      "quality_score": 75
+    },
+    {
+      "minute": 101,
+      "stage": "Light",
+      "time": "01:41",
+      "quality_score": 75
+    },
+    {
+      "minute": 102,
+      "stage": "Light",
+      "time": "01:42",
+      "quality_score": 82
+    },
+    {
+      "minute": 103,
+      "stage": "Light",
+      "time": "01:43",
+      "quality_score": 82
+    },
+    {
+      "minute": 104,
+      "stage": "Light",
+      "time": "01:44",
+      "quality_score": 81
+    },
+    {
+      "minute": 105,
+      "stage": "Light",
+      "time": "01:45",
+      "quality_score": 73
+    },
+    {
+      "minute": 106,
+      "stage": "Light",
+      "time": "01:46",
+      "quality_score": 81
+    },
+    {
+      "minute": 107,
+      "stage": "Deep",
+      "time": "01:47",
+      "quality_score": 70
+    },
+    {
+      "minute": 108,
+      "stage": "Deep",
+      "time": "01:48",
+      "quality_score": 85
+    },
+    {
+      "minute": 109,
+      "stage": "Deep",
+      "time": "01:49",
+      "quality_score": 86
+    },
+    {
+      "minute": 110,
+      "stage": "Deep",
+      "time": "01:50",
+      "quality_score": 92
+    },
+    {
+      "minute": 111,
+      "stage": "Deep",
+      "time": "01:51",
+      "quality_score": 93
+    },
+    {
+      "minute": 112,
+      "stage": "Deep",
+      "time": "01:52",
+      "quality_score": 83
+    },
+    {
+      "minute": 113,
+      "stage": "Deep",
+      "time": "01:53",
+      "quality_score": 80
+    },
+    {
+      "minute": 114,
+      "stage": "Deep",
+      "time": "01:54",
+      "quality_score": 74
+    },
+    {
+      "minute": 115,
+      "stage": "Deep",
+      "time": "01:55",
+      "quality_score": 91
+    },
+    {
+      "minute": 116,
+      "stage": "Deep",
+      "time": "01:56",
+      "quality_score": 72
+    },
+    {
+      "minute": 117,
+      "stage": "Deep",
+      "time": "01:57",
+      "quality_score": 70
+    },
+    {
+      "minute": 118,
+      "stage": "Deep",
+      "time": "01:58",
+      "quality_score": 71
+    },
+    {
+      "minute": 119,
+      "stage": "Deep",
+      "time": "01:59",
+      "quality_score": 92
+    },
+    {
+      "minute": 120,
+      "stage": "Deep",
+      "time": "02:00",
+      "quality_score": 79
+    },
+    {
+      "minute": 121,
+      "stage": "Deep",
+      "time": "02:01",
+      "quality_score": 89
+    },
+    {
+      "minute": 122,
+      "stage": "Light",
+      "time": "02:02",
+      "quality_score": 83
+    },
+    {
+      "minute": 123,
+      "stage": "Light",
+      "time": "02:03",
+      "quality_score": 76
+    },
+    {
+      "minute": 124,
+      "stage": "Light",
+      "time": "02:04",
+      "quality_score": 68
+    },
+    {
+      "minute": 125,
+      "stage": "Light",
+      "time": "02:05",
+      "quality_score": 81
+    },
+    {
+      "minute": 126,
+      "stage": "Light",
+      "time": "02:06",
+      "quality_score": 66
+    },
+    {
+      "minute": 127,
+      "stage": "Light",
+      "time": "02:07",
+      "quality_score": 70
+    },
+    {
+      "minute": 128,
+      "stage": "Light",
+      "time": "02:08",
+      "quality_score": 67
+    },
+    {
+      "minute": 129,
+      "stage": "Light",
+      "time": "02:09",
+      "quality_score": 71
+    },
+    {
+      "minute": 130,
+      "stage": "Light",
+      "time": "02:10",
+      "quality_score": 69
+    },
+    {
+      "minute": 131,
+      "stage": "Light",
+      "time": "02:11",
+      "quality_score": 75
+    },
+    {
+      "minute": 132,
+      "stage": "Light",
+      "time": "02:12",
+      "quality_score": 80
+    },
+    {
+      "minute": 133,
+      "stage": "Light",
+      "time": "02:13",
+      "quality_score": 64
+    },
+    {
+      "minute": 134,
+      "stage": "Light",
+      "time": "02:14",
+      "quality_score": 79
+    },
+    {
+      "minute": 135,
+      "stage": "Light",
+      "time": "02:15",
+      "quality_score": 60
+    },
+    {
+      "minute": 136,
+      "stage": "Light",
+      "time": "02:16",
+      "quality_score": 70
+    },
+    {
+      "minute": 137,
+      "stage": "Light",
+      "time": "02:17",
+      "quality_score": 65
+    },
+    {
+      "minute": 138,
+      "stage": "Light",
+      "time": "02:18",
+      "quality_score": 67
+    },
+    {
+      "minute": 139,
+      "stage": "Light",
+      "time": "02:19",
+      "quality_score": 80
+    },
+    {
+      "minute": 140,
+      "stage": "Light",
+      "time": "02:20",
+      "quality_score": 70
+    },
+    {
+      "minute": 141,
+      "stage": "Light",
+      "time": "02:21",
+      "quality_score": 68
+    },
+    {
+      "minute": 142,
+      "stage": "Light",
+      "time": "02:22",
+      "quality_score": 63
+    },
+    {
+      "minute": 143,
+      "stage": "Light",
+      "time": "02:23",
+      "quality_score": 73
+    },
+    {
+      "minute": 144,
+      "stage": "Light",
+      "time": "02:24",
+      "quality_score": 75
+    },
+    {
+      "minute": 145,
+      "stage": "Light",
+      "time": "02:25",
+      "quality_score": 60
+    },
+    {
+      "minute": 146,
+      "stage": "Light",
+      "time": "02:26",
+      "quality_score": 66
+    },
+    {
+      "minute": 147,
+      "stage": "Deep",
+      "time": "02:27",
+      "quality_score": 94
+    },
+    {
+      "minute": 148,
+      "stage": "Deep",
+      "time": "02:28",
+      "quality_score": 88
+    },
+    {
+      "minute": 149,
+      "stage": "Deep",
+      "time": "02:29",
+      "quality_score": 76
+    },
+    {
+      "minute": 150,
+      "stage": "Deep",
+      "time": "02:30",
+      "quality_score": 71
+    },
+    {
+      "minute": 151,
+      "stage": "Deep",
+      "time": "02:31",
+      "quality_score": 76
+    },
+    {
+      "minute": 152,
+      "stage": "Deep",
+      "time": "02:32",
+      "quality_score": 74
+    },
+    {
+      "minute": 153,
+      "stage": "Deep",
+      "time": "02:33",
+      "quality_score": 81
+    },
+    {
+      "minute": 154,
+      "stage": "Deep",
+      "time": "02:34",
+      "quality_score": 79
+    },
+    {
+      "minute": 155,
+      "stage": "Deep",
+      "time": "02:35",
+      "quality_score": 70
+    },
+    {
+      "minute": 156,
+      "stage": "Deep",
+      "time": "02:36",
+      "quality_score": 91
+    },
+    {
+      "minute": 157,
+      "stage": "Light",
+      "time": "02:37",
+      "quality_score": 75
+    },
+    {
+      "minute": 158,
+      "stage": "Light",
+      "time": "02:38",
+      "quality_score": 69
+    },
+    {
+      "minute": 159,
+      "stage": "Light",
+      "time": "02:39",
+      "quality_score": 74
+    },
+    {
+      "minute": 160,
+      "stage": "Light",
+      "time": "02:40",
+      "quality_score": 73
+    },
+    {
+      "minute": 161,
+      "stage": "Light",
+      "time": "02:41",
+      "quality_score": 63
+    },
+    {
+      "minute": 162,
+      "stage": "Light",
+      "time": "02:42",
+      "quality_score": 67
+    },
+    {
+      "minute": 163,
+      "stage": "Light",
+      "time": "02:43",
+      "quality_score": 78
+    },
+    {
+      "minute": 164,
+      "stage": "Light",
+      "time": "02:44",
+      "quality_score": 80
+    },
+    {
+      "minute": 165,
+      "stage": "Light",
+      "time": "02:45",
+      "quality_score": 73
+    },
+    {
+      "minute": 166,
+      "stage": "Light",
+      "time": "02:46",
+      "quality_score": 66
+    },
+    {
+      "minute": 167,
+      "stage": "Light",
+      "time": "02:47",
+      "quality_score": 77
+    },
+    {
+      "minute": 168,
+      "stage": "Light",
+      "time": "02:48",
+      "quality_score": 82
+    },
+    {
+      "minute": 169,
+      "stage": "Light",
+      "time": "02:49",
+      "quality_score": 64
+    },
+    {
+      "minute": 170,
+      "stage": "Light",
+      "time": "02:50",
+      "quality_score": 74
+    },
+    {
+      "minute": 171,
+      "stage": "Light",
+      "time": "02:51",
+      "quality_score": 63
+    },
+    {
+      "minute": 172,
+      "stage": "Light",
+      "time": "02:52",
+      "quality_score": 83
+    },
+    {
+      "minute": 173,
+      "stage": "Light",
+      "time": "02:53",
+      "quality_score": 65
+    },
+    {
+      "minute": 174,
+      "stage": "Light",
+      "time": "02:54",
+      "quality_score": 71
+    },
+    {
+      "minute": 175,
+      "stage": "Light",
+      "time": "02:55",
+      "quality_score": 72
+    },
+    {
+      "minute": 176,
+      "stage": "Light",
+      "time": "02:56",
+      "quality_score": 64
+    },
+    {
+      "minute": 177,
+      "stage": "Light",
+      "time": "02:57",
+      "quality_score": 75
+    },
+    {
+      "minute": 178,
+      "stage": "Light",
+      "time": "02:58",
+      "quality_score": 70
+    },
+    {
+      "minute": 179,
+      "stage": "Light",
+      "time": "02:59",
+      "quality_score": 69
+    },
+    {
+      "minute": 180,
+      "stage": "Light",
+      "time": "03:00",
+      "quality_score": 84
+    },
+    {
+      "minute": 181,
+      "stage": "Light",
+      "time": "03:01",
+      "quality_score": 82
+    },
+    {
+      "minute": 182,
+      "stage": "Light",
+      "time": "03:02",
+      "quality_score": 71
+    },
+    {
+      "minute": 183,
+      "stage": "Light",
+      "time": "03:03",
+      "quality_score": 67
+    },
+    {
+      "minute": 184,
+      "stage": "Light",
+      "time": "03:04",
+      "quality_score": 66
+    },
+    {
+      "minute": 185,
+      "stage": "Light",
+      "time": "03:05",
+      "quality_score": 78
+    },
+    {
+      "minute": 186,
+      "stage": "Light",
+      "time": "03:06",
+      "quality_score": 73
+    },
+    {
+      "minute": 187,
+      "stage": "Wake",
+      "time": "03:07",
+      "quality_score": 73
+    },
+    {
+      "minute": 188,
+      "stage": "Wake",
+      "time": "03:08",
+      "quality_score": 68
+    },
+    {
+      "minute": 189,
+      "stage": "Wake",
+      "time": "03:09",
+      "quality_score": 66
+    },
+    {
+      "minute": 190,
+      "stage": "Wake",
+      "time": "03:10",
+      "quality_score": 63
+    },
+    {
+      "minute": 191,
+      "stage": "Wake",
+      "time": "03:11",
+      "quality_score": 62
+    },
+    {
+      "minute": 192,
+      "stage": "Wake",
+      "time": "03:12",
+      "quality_score": 60
+    },
+    {
+      "minute": 193,
+      "stage": "Wake",
+      "time": "03:13",
+      "quality_score": 67
+    },
+    {
+      "minute": 194,
+      "stage": "Wake",
+      "time": "03:14",
+      "quality_score": 69
+    },
+    {
+      "minute": 195,
+      "stage": "Wake",
+      "time": "03:15",
+      "quality_score": 74
+    },
+    {
+      "minute": 196,
+      "stage": "Wake",
+      "time": "03:16",
+      "quality_score": 70
+    }
+  ],
+  "current_metrics": {
+    "current_time": "18:07",
+    "sleep_started": "23:30",
+    "duration_so_far": "7h 45m",
+    "quality_score": 82,
+    "deep_sleep_percent": 22,
+    "light_sleep_percent": 45,
+    "wake_percent": 8,
+    "cycles_completed": 4,
+    "avg_heart_rate": 58,
+    "avg_heart_rate_change": -2
+  },
+  "nightly_stats": {
+    "total_sleep": "7h 45m",
+    "wake": "37m (8%)",
+    "light": "209m (45%)",
+    "deep": "102m (22%)",
+    "rem": "117m (25%)",
+    "efficiency": "97%",
+    "quality_score": 82,
+    "quality_label": "Excellent"
+  },
+  "timestamp": "2026-04-16T18:07:20.305624"
+}

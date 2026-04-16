@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Stage Predictor - Real-time EEG Classification</title>
+    <link rel="stylesheet" href="predictor.css">
+</head>
+<body>
+    <div class="predictor-app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-inner">
+                <h1>🌙 Sleep Stage Predictor</h1>
+                <p>Real-time Classification from 12-Feature Random Forest Model</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Left Panel - Data Generation -->
+            <section class="panel left-panel">
+                <div class="panel-content">
+                    <h2>📊 12 Model Features</h2>
+                    <p style="font-size: 0.8rem; color: #0369a1; margin-bottom: 1rem;">Heart Rate, HRV, Movement from wearables</p>
+                    
+                    <div class="button-container">
+                        <button class="generate-btn" id="generateBtn">
+                            <span class="btn-icon">⚡</span>
+                            <span class="btn-text">Generate Data</span>
+                        </button>
+                    </div>
+
+                    <div class="data-display" id="dataDisplay" style="display: none;">
+                        <h3>Detected Signals</h3>
+                        
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>❤️ Mean HR</span>
+                                <span class="signal-value" id="deltaValue">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="deltaBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>📊 HR Std Dev</span>
+                                <span class="signal-value" id="feature5Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature5Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>📉 Min HR</span>
+                                <span class="signal-value" id="feature6Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature6Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>📈 HR Range</span>
+                                <span class="signal-value" id="feature7Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature7Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>🫀 HRV RMSSD</span>
+                                <span class="signal-value" id="feature8Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature8Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>⚡ HRV %</span>
+                                <span class="signal-value" id="feature9Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature9Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>📡 PPG SNR</span>
+                                <span class="signal-value" id="gammaValue">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="gammaBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>🚶 Movement</span>
+                                <span class="signal-value" id="feature11Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature11Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>🌊 Spectral Power</span>
+                                <span class="signal-value" id="feature12Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature12Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>📍 Movement Var</span>
+                                <span class="signal-value" id="feature13Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature13Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>≈ Zero Crossing</span>
+                                <span class="signal-value" id="feature14Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature14Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span>🌀 Spectral Entropy</span>
+                                <span class="signal-value" id="feature15Value">--</span>
+                            </div>
+                            <div class="signal-bar">
+                                <div class="signal-fill" id="feature15Bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="signal-stats">
+                            <div class="stat">
+                                <span class="stat-label">Signal Quality</span>
+                                <span class="stat-value" id="quality">--</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Noise Level</span>
+                                <span class="stat-value" id="noise">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">📡</div>
+                        <p>Click "Generate Data" to simulate wearable sensor data</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Predictions -->
+            <section class="panel right-panel">
+                <div class="panel-content">
+                    <h2>🎯 Prediction Results</h2>
+
+                    <div class="prediction-display" id="predictionDisplay" style="display: none;">
+                        <!-- Main Prediction -->
+                        <div class="prediction-main">
+                            <div class="stage-icon" id="stageIcon">💤</div>
+                            <div class="stage-name" id="stageName">Deep Sleep</div>
+                            <div class="stage-description" id="stageDesc">Restorative sleep phase</div>
+                        </div>
+
+                        <!-- Confidence Meter -->
+                        <div class="confidence-section">
+                            <h3>Confidence Level</h3>
+                            <div class="speedometer-container">
+                                <svg viewBox="0 0 300 200" class="speedometer">
+                                    <!-- Background circle -->
+                                    <circle cx="150" cy="150" r="130" fill="none" stroke="#e5e7eb" stroke-width="2"/>
+                                    
+                                    <!-- Gauge arc -->
+                                    <path d="M 40 150 A 110 110 0 0 1 260 150" fill="none" stroke="url(#gaugeGradient)" stroke-width="20" stroke-linecap="round"/>
+                                    
+                                    <!-- Gradient definition -->
+                                    <defs>
+                                        <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                                            <stop offset="50%" style="stop-color:#eab308;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                    
+                                    <!-- Center circle -->
+                                    <circle cx="150" cy="150" r="12" fill="#0284c7" />
+                                    
+                                    <!-- Needle -->
+                                    <g id="confidenceNeedle" transform="translate(150, 150) rotate(180)">
+                                        <line x1="0" y1="0" x2="0" y2="-100" stroke="#0284c7" stroke-width="4" stroke-linecap="round" />
+                                        <polygon points="0,-105 -5,-95 5,-95" fill="#0284c7" />
+                                    </g>
+                                    
+                                    <!-- Labels -->
+                                    <text x="45" y="170" font-size="12" fill="#6b7280" text-anchor="middle">0%</text>
+                                    <text x="255" y="170" font-size="12" fill="#6b7280" text-anchor="middle">100%</text>
+                                </svg>
+                                <div class="confidence-display">
+                                    <div class="confidence-value">
+                                        <span id="confidencePercent">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage Probabilities -->
+                        <div class="probabilities-section">
+                            <h3>Stage Probabilities</h3>
+                            <div class="probability-list">
+                                <div class="probability-item">
+                                    <div class="prob-header">
+                                        <span class="prob-stage">
+                                            <span class="prob-emoji">💤</span>
+                                            <span>Deep Sleep</span>
+                                        </span>
+                                        <span class="prob-value" id="probDeep">0%</span>
+                                    </div>
+                                    <div class="prob-bar">
+                                        <div class="prob-fill deep" id="probDeepBar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="probability-item">
+                                    <div class="prob-header">
+                                        <span class="prob-stage">
+                                            <span class="prob-emoji">🌙</span>
+                                            <span>Light Sleep</span>
+                                        </span>
+                                        <span class="prob-value" id="probLight">0%</span>
+                                    </div>
+                                    <div class="prob-bar">
+                                        <div class="prob-fill light" id="probLightBar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="probability-item">
+                                    <div class="prob-header">
+                                        <span class="prob-stage">
+                                            <span class="prob-emoji">👁️</span>
+                                            <span>Wake</span>
+                                        </span>
+                                        <span class="prob-value" id="probWake">0%</span>
+                                    </div>
+                                    <div class="prob-bar">
+                                        <div class="prob-fill wake" id="probWakeBar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prediction Timestamp -->
+                        <div class="prediction-meta">
+                            <span class="meta-label">Predicted at:</span>
+                            <span class="meta-value" id="predictTime">--:--:--</span>
+                        </div>
+                    </div>
+
+                    <div class="empty-state" id="predictionEmpty">
+                        <div class="empty-icon">🔮</div>
+                        <p>Generate data to see predictions</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Sleep Stage Recognition System | ML-powered EEG Analysis | 87.5% Accuracy</p>
+        </footer>
+    </div>
+
+    <script src="predictor.js"></script>
+</body>
+</html>
